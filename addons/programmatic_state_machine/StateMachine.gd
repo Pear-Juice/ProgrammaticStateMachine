@@ -35,6 +35,7 @@ func resume():
 ## [param enter_func] The function called when the state is transferred to[br]
 ## [param process_func] The function called every frame after enter[br]
 ## [param phys_process_func] The function called every physics frame after enter[br]
+## [param exit_func] The function called on exit of current state. Always called before next state's enter function
 func add_state(state_name : String, enter_func = null, process_func = null, phys_process_func = null, exit_func = null):
 	var state = State.new()
 	state.state_name = state_name
@@ -45,15 +46,15 @@ func add_state(state_name : String, enter_func = null, process_func = null, phys
 	state_array.append(state)
 
 ## Gets the current state's ID[br]
-## Note: state id changes on state enter[br]
+## Note: state ID updates on state enter[br]
 ## Useful for passing in to a transfer call in order to ensure it is called from the same state
 func get_current_state_id():
 	return current_state.state_id
 
 ## Transfers to a state[br]
 ## [param state_name] The name of the state to transfer to[br]
-## [param require_current_state] The id of the state that this transfer must happen from.[br]
-## Only necessary if transfer is called asynchronously
+## [param required_state_id] The id of the state that this transfer must happen from[br]
+## Only necessary for handling asynchronous transfers
 func transfer(state_name : String, required_state_id := 0):
 	if debug:
 		if current_state:
