@@ -1,5 +1,5 @@
 # Programmatic State Machine
-## A simple state machine that exits solely in code.
+## A simple state machine for Godot that exits solely in code.
 
 
 This plugin defines two classes: `State` and `StateMachine`
