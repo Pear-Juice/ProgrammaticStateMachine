@@ -1,5 +1,5 @@
 # Programmatic State Machine
-## A simple state machine that exits solely in code.
+## A simple state machine for Godot that exits solely in code.
 
 ![Gif of square moving between three positions based on state](Clip.gif)
 
