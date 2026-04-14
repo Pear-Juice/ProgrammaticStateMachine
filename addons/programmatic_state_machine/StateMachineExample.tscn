@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://chskxknm3tlth"]
+
+[ext_resource type="Script" uid="uid://ctrk8fwutuk8l" path="res://addons/programmatic_statemachine/StateMachineExample.gd" id="1_7kexe"]
+
+[sub_resource type="Gradient" id="Gradient_ekpq8"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ldium"]
+gradient = SubResource("Gradient_ekpq8")
+
+[node name="StateMachineExample" type="Node2D" unique_id=448117554 node_paths=PackedStringArray("sprite", "pos_idle", "pos_1", "pos_2", "pos_3")]
+script = ExtResource("1_7kexe")
+sprite = NodePath("Sprite2D")
+pos_idle = NodePath("Pos_Idle")
+pos_1 = NodePath("Pos_1")
+pos_2 = NodePath("Pos_2")
+pos_3 = NodePath("Pos_3")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1854814647]
+position = Vector2(564, 75)
+texture = SubResource("GradientTexture2D_ldium")
+
+[node name="Pos_Idle" type="Marker2D" parent="." unique_id=465240209]
+position = Vector2(564, 77)
+
+[node name="Pos_1" type="Marker2D" parent="." unique_id=1416940419]
+position = Vector2(294, 177)
+
+[node name="Pos_2" type="Marker2D" parent="." unique_id=1564034129]
+position = Vector2(840, 172)
+
+[node name="Pos_3" type="Marker2D" parent="." unique_id=1575838255]
+position = Vector2(573, 424)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=367167785]
+position = Vector2(572, 319)
+
+[node name="Label" type="Label" parent="." unique_id=22544942]
+offset_left = 454.0
+offset_top = 512.0
+offset_right = 715.0
+offset_bottom = 561.0
+text = "Square moves every two seconds.
+Press space to force move."

@@ -8,24 +8,33 @@ var paused_state : State
 var debug : bool
 var delta : float
 
+## Creates a new state machine object[br]
+## [param base] defines the node to attach proccess signals to
 static func create(base : Node):
 	var new_machine = StateMachine.new()
 	base.add_child(new_machine)
 	
 	return new_machine
-	
+
+## Destroys the state machine
 func destroy():
 	current_state = null
 	queue_free()
-	
+
+## Pauses the state machine
 func pause():
 	paused_state = current_state
 	current_state = null
-	
+
+## Resumes the state machine
 func resume():
 	current_state = paused_state
 	
-	
+## Adds a state to the state machine[br]
+## [param state_name] The name of the state to add.[br]
+## [param enter_func] The function called when the state is transferred to[br]
+## [param process_func] The function called every frame after enter[br]
+## [param phys_process_func] The function called every physics frame after enter[br]
 func add_state(state_name : String, enter_func = null, process_func = null, phys_process_func = null, exit_func = null):
 	var state = State.new()
 	state.state_name = state_name
@@ -35,16 +44,27 @@ func add_state(state_name : String, enter_func = null, process_func = null, phys
 	state.exit = exit_func
 	state_array.append(state)
 
-func transfer(state_name : String, required_previous_state := ""):
+## Gets the current state's ID[br]
+## Note: state id changes on state enter[br]
+## Useful for passing in to a transfer call in order to ensure it is called from the same state
+func get_current_state_id():
+	return current_state.state_id
+
+## Transfers to a state[br]
+## [param state_name] The name of the state to transfer to[br]
+## [param require_current_state] The id of the state that this transfer must happen from.[br]
+## Only necessary if transfer is called asynchronously
+func transfer(state_name : String, required_state_id := 0):
 	if debug:
 		if current_state:
 			prints("SM: Transfer from:", current_state.state_name, "to", state_name)
 		else:
 			prints("SM: Transfer to", state_name)
 	
-	if !required_previous_state.is_empty() && current_state && current_state.state_name != required_previous_state:
+	if (required_state_id != 0 && required_state_id != current_state.state_id):
 		if debug:
-			print("SM: Current state " + current_state.state_name + " does not match the required state " + required_previous_state + ". Ignoring.")
+			prints("SM: Cancelling transfer, state id", required_state_id, " does not match ", current_state.state_id)
+			
 		return
 		
 	if current_state && current_state.exit:
@@ -67,8 +87,9 @@ func transfer(state_name : String, required_previous_state := ""):
 			prints("SM: Enter", current_state.state_name)
 	
 		current_state.elapsed_time = 0
+		current_state.state_id = Time.get_ticks_msec()+1
 		current_state.enter.call()
-	
+
 func _process(delta):
 	if current_state && current_state.process:
 		current_state.process.call(delta)

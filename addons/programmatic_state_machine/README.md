@@ -1,0 +1,11 @@
+A simple state machine that exits solely in code.
+
+This plugin defines two classes: State and StateMachine
+Create a new StateMachine by defining a variable: let state_m = StateMachine.create(self)
+Add states by calling:
+state_m.add_state("State Name", ready_func, process_func, physics_process_func, exit_func)
+
+transfer between states using:
+state_m.transfer("StateName")
+
+The state machine will automatically handle state transitions and call the correct functions 

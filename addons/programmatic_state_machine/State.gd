@@ -3,6 +3,7 @@ class_name State
 extends Node
 
 var state_name : String
+var state_id : int
 
 #functions
 var enter
