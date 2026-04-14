@@ -7,7 +7,7 @@ This plugin defines two classes: `State` and `StateMachine`
 Create a new `StateMachine` by defining a variable: 
 
 ```GDScript
-let state_m = StateMachine.create(self)
+var state_m = StateMachine.create(self)
 ```
 
 Add states by calling:
